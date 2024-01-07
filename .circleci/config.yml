@@ -23,8 +23,8 @@ jobs:
           command: |
             ENV_1=qa1
             echo "$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"
-            echo "$(cat env/environments.json | jq -r '.$ENV_1.region')"
-            echo "$(cat env/environments.json | jq -r '.$ENV_1.short_region')"
+            echo "$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"
+            echo "$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"
             ENV_2="$(cat env/environments.json | jq -r '.qa1.env')"
             echo "----------------"
             echo "$ENV_2"
