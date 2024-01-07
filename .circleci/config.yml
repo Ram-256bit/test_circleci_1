@@ -19,6 +19,8 @@ jobs:
             apk add jq
             ls
       - run:
+          name: Print env variables
+          command: |
             ENV_1=qa1
             echo "$(cat env/environments.json | jq -r '.$ENV_1.env')"
             echo "$(cat env/environments.json | jq -r '.$ENV_1.region')"
