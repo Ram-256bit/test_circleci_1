@@ -17,8 +17,12 @@ jobs:
           command: |
             apk update
             apk add jq
-            cd env
             ls
+            
+            ENV_1="$(cat env/environments.json | jq -r '.qa1.env')"
+            echo "----------------"
+            echo "$ENV_1"
+            echo "----------------"
             echo "export fruit=apple" >> "$BASH_ENV"
             source "$BASH_ENV"
             echo "$fruit"
