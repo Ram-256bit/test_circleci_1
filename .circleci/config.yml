@@ -31,9 +31,9 @@ jobs:
             echo "$REGION"
             echo "$SHORT_REGION"
             echo "----------------"
-            echo "export $ENV" >> "$BASH_ENV"
-            echo "export $REGION" >> "$BASH_ENV"
-            echo "export $SHORT_REGION" >> "$BASH_ENV"
+            echo "export ENV="$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"" >> "$BASH_ENV"
+            echo "export REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"" >> "$BASH_ENV"
+            echo "export SHORT_REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"" >> "$BASH_ENV"
             source "$BASH_ENV"
             
       - run: |
