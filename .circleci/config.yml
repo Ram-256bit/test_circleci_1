@@ -28,12 +28,33 @@ jobs:
             echo "export fruit=apple" >> "$BASH_ENV"
             source "$BASH_ENV"
             echo "$fruit"
-           
+  job2:
+    docker:
+      - image: python:3.8
+    working_directory: ~/repo
+    steps:
+      - checkout
 
+      # Uncomment and modify the following lines if needed
+      # - aws-cli/setup:
+      #     aws_access_key_id: aws_access_key
+      #     aws_secret_access_key: aws_secret_key
+      #     region: region
+
+      # - aws-s3/sync:
+      #     from: "Rapport_1.0/aws_data_pipelines/step_functions/src/RapportPipeline"
+      #     to: "s3://prvs3-rp-config-${short_region}-${ENV}-01/step_functions/RapportPipeline/"
+
+      - run:
+          name: Step 1
+          command: |
+            echo "$fruit"
+           
 workflows:
   version: 2
-  workflow_2:
+  Infra-Setup-1:
     jobs:
-      - job1:
-          context:
-            - python
+      - job1
+      - job2:
+          requires:
+            - job1
