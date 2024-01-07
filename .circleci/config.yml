@@ -22,16 +22,20 @@ jobs:
           name: Print env variables
           command: |
             ENV_1=qa1
-            echo "$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"
-            echo "$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"
-            echo "$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"
+            ENV="$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"
+            REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"
+            SHORT_REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"
             ENV_2="$(cat env/environments.json | jq -r '.qa1.env')"
             echo "----------------"
-            echo "$ENV_2"
+            echo "$ENV"
+            echo "$REGION"
+            echo "$SHORT_REGION"
             echo "----------------"
-            echo "export fruit=apple" >> "$BASH_ENV"
+            echo "export $ENV" >> "$BASH_ENV"
+            echo "export $REGION" >> "$BASH_ENV"
+            echo "export $SHORT_REGION" >> "$BASH_ENV"
             source "$BASH_ENV"
-            echo "$fruit"
+            
       - run: |
           cp $BASH_ENV bash.env
       - persist_to_workspace:
@@ -50,12 +54,16 @@ jobs:
           cat bash.env >> $BASH_ENV
       - run: |
           # verify; this should print 'BAR'
-          printenv fruit
+          printenv ENV
       - run:
           name: Step 1
           command: |
             source "$BASH_ENV"
-            echo "$fruit"
+            echo "----------------"
+            echo "$ENV"
+            echo "$REGION"
+            echo "$SHORT_REGION"
+            echo "----------------"
            
 workflows:
   version: 2
