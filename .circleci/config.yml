@@ -21,19 +21,19 @@ jobs:
       - run:
           name: Print env variables
           command: |
-            ENV_1=uat1
-            ENV="$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"
-            REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"
-            SHORT_REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"
+            
+            ENV="$(cat env/environments.json | jq -r '.["'$environment'"].env')"
+            REGION="$(cat env/environments.json | jq -r '.["'$environment'"].region')"
+            SHORT_REGION="$(cat env/environments.json | jq -r '.["'$environment'"].short_region')"
             ENV_2="$(cat env/environments.json | jq -r '.qa1.env')"
             echo "----------------"
             echo "$ENV"
             echo "$REGION"
             echo "$SHORT_REGION"
             echo "----------------"
-            echo "export ENV="$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"" >> "$BASH_ENV"
-            echo "export REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"" >> "$BASH_ENV"
-            echo "export SHORT_REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"" >> "$BASH_ENV"
+            echo "export ENV="$(cat env/environments.json | jq -r '.["'$environment'"].env')"" >> "$BASH_ENV"
+            echo "export REGION="$(cat env/environments.json | jq -r '.["'$environment'"].region')"" >> "$BASH_ENV"
+            echo "export SHORT_REGION="$(cat env/environments.json | jq -r '.["'$environment'"].short_region')"" >> "$BASH_ENV"
             source "$BASH_ENV"
             
       - run: |
