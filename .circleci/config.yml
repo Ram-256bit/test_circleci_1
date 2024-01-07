@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  terraform: circleci/terraform@3.2.1
+  python: circleci/python@1.5.0
+
+Deploy-Step-functions:
+    docker:
+      - image: python:3.8
+    # environment:
+    #   short_region: << pipeline.parameters.short_region >>
+    #   ENV: << pipeline.parameters.ENV >>
+    working_directory: ~/repo
+    steps:
+      - checkout   
+      
+      # - aws-cli/setup:
+      #     aws_access_key_id: aws_access_key
+      #     aws_secret_access_key: aws_secret_key
+      #     region: region
+
+      # - aws-s3/sync:
+      #     from: "Rapport_1.0/aws_data_pipelines/step_functions/src/RapportPipeline"  
+      #     to: "s3://prvs3-rp-config-${short_region}-${ENV}-01/step_functions/RapportPipeline/"  
+
+      - run:
+          name: Step 1
+          command: |
+            
+              echo "export fruit=apple" >> "$BASH_ENV"
+              source "$BASH_ENV"
+              echo "$fruit"
+              # Update State function definition
+              # aws stepfunctions update-state-machine \
+              #   --state-machine-arn $STEP_FUNCTION_ARN_1 \
+              #   --definition "$(aws s3 cp s3://prvs3-rp-config-${short_region}-${ENV}-01/step_functions/RapportPipeline/configuration.json -)"
+           
