@@ -3,29 +3,22 @@ version: 2.1
 orbs:
   terraform: circleci/terraform@3.2.1
   python: circleci/python@1.5.0
-
+  
 
 jobs:
   job1:
     docker:
-      - image: python:3.8
+      - image: hashicorp/terraform:latest
     working_directory: ~/repo
     steps:
       - checkout
-
-      # Uncomment and modify the following lines if needed
-      # - aws-cli/setup:
-      #     aws_access_key_id: aws_access_key
-      #     aws_secret_access_key: aws_secret_key
-      #     region: region
-
-      # - aws-s3/sync:
-      #     from: "Rapport_1.0/aws_data_pipelines/step_functions/src/RapportPipeline"
-      #     to: "s3://prvs3-rp-config-${short_region}-${ENV}-01/step_functions/RapportPipeline/"
-
       - run:
           name: Step 1
           command: |
+            apk update
+            apk add jq
+            cd env
+            ls
             echo "export fruit=apple" >> "$BASH_ENV"
             source "$BASH_ENV"
             echo "$fruit"
@@ -41,16 +34,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-
-      # Uncomment and modify the following lines if needed
-      # - aws-cli/setup:
-      #     aws_access_key_id: aws_access_key
-      #     aws_secret_access_key: aws_secret_key
-      #     region: region
-
-      # - aws-s3/sync:
-      #     from: "Rapport_1.0/aws_data_pipelines/step_functions/src/RapportPipeline"
-      #     to: "s3://prvs3-rp-config-${short_region}-${ENV}-01/step_functions/RapportPipeline/"
       - attach_workspace:
           at: .
       - run: |
