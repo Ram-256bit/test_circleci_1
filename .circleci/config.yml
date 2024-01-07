@@ -3,7 +3,7 @@ orbs:
   terraform: circleci/terraform@3.2.1
   python: circleci/python@1.5.0
 
-Deploy-Step-functions:
+job1:
     docker:
       - image: python:3.8
     # environment:
@@ -33,4 +33,8 @@ Deploy-Step-functions:
               # aws stepfunctions update-state-machine \
               #   --state-machine-arn $STEP_FUNCTION_ARN_1 \
               #   --definition "$(aws s3 cp s3://prvs3-rp-config-${short_region}-${ENV}-01/step_functions/RapportPipeline/configuration.json -)"
-           
+workflows:
+  workflow_2:
+    jobs:
+      - job1:
+      
