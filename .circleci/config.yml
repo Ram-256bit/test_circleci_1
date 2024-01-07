@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Print env variables
           command: |
-            ENV_1=qa1
+            ENV_1=uat1
             ENV="$(cat env/environments.json | jq -r '.["'$ENV_1'"].env')"
             REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].region')"
             SHORT_REGION="$(cat env/environments.json | jq -r '.["'$ENV_1'"].short_region')"
