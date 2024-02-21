@@ -3,6 +3,8 @@ version: 2.1
 orbs:
   terraform: circleci/terraform@3.2.1
   python: circleci/python@1.5.0
+  aws-cli: circleci/aws-cli@4.0
+  aws-s3: circleci/aws-s3@4.0
   
 
 jobs:
@@ -64,12 +66,32 @@ jobs:
             echo "$REGION"
             echo "$SHORT_REGION"
             echo "----------------"
-           
+  
+  job3:
+    docker:
+      - image: cimg/aws:2023.12
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - aws-cli/setup:
+          aws_access_key_id: AKIAV6BPTWTLQQDLRJBV
+          aws_secret_access_key: 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
+          region: ap-south-1
+
+      - aws-s3/sync:
+          from: "./"  
+          to: "s3://circle-test-bucket-1/"
+          arguments: "--delete"
 workflows:
   version: 2
-  Infra-Setup-1:
+  # Infra-Setup-1:
+  #   jobs:
+  #     - job1
+  #     - job2:
+  #         requires:
+  #           - job1
+  S3-sync-test:
     jobs:
-      - job1
-      - job2:
-          requires:
-            - job1
+      - job3
